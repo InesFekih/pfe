@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BM INTRO</title>
+    <style>
+    @font-face {
+        font-family: 'AvenirNextLTPro-Bold';
+        src: url('Typos/AvenirNextLTPro-Bold.otf') format('opentype');
+    }
+    
+    body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            overflow: hidden;
+            color: white;
+            font-size: 3rem;
+            font-family: 'AvenirNextLTPro-Bold', Arial, sans-serif;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .circle {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .text {
+            position: absolute;
+            opacity: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            width: auto;
+            font-family: 'AvenirNextLTPro-Bold', Arial, sans-serif;
+            font-size: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="circle" id="circle"></div>
+        <div class="text" id="text"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        const tl = gsap.timeline();
+        const textElement = document.getElementById("text");
+        const text = "WE ARE . .";
+        textElement.style.opacity = 1;
+        textElement.innerText = "";
+        
+        // Étape 1 : Apparition du cercle
+        tl.fromTo("#circle", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 1 });
+        
+        // Étape 2 : Transformation en curseur et déplacement à gauche
+        tl.to("#circle", { width: 22, height: 145, borderRadius: "0px", x: -300, duration: 1.15 });
+        
+        // Étape 3 : Écriture progressive du texte en avançant vers la droite
+        let index = 0;
+        tl.to("#circle", { width: 33, height: 34, borderRadius: "50%", x: 100, duration: 2, onUpdate: function() {
+            if (index < text.length) {
+                textElement.innerText = text.substring(0, index + 1);
+                index++;
+            }
+        }});
+        
+        // Étape 4 : Reformation en point et arrêt à côté des autres points
+        tl.to("#circle", { x: 160, duration: 2 });
+    </script>
+</body>
+</html>
